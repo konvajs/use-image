@@ -1,0 +1,29 @@
+{
+  "name": "use-image",
+  "version": "0.5.0",
+  "description": "Custom React Hook for loading images.",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/konvajs/use-image.git"
+  },
+  "keywords": [
+    "react",
+    "react-hooks",
+    "canvas",
+    "image"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/konvajs/use-image/issues"
+  },
+  "homepage": "https://github.com/konvajs/use-image/",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  }
+}
