@@ -17,8 +17,8 @@ import { Image } from 'react-konva';
 import useImage from 'use-image';
 
 export default function App() {
-  const url = 'https://cdn.int64ago.org/ogk39i54.png';
-  let { image, status } = useImage(url);
+  const url = 'https://konvajs.github.io/assets/yoda.jpg';
+  let [image, status] = useImage(url);
 
   // image is DOM image element or undefined
   // image will be undefined while its loading or loading is failed
