@@ -13,6 +13,8 @@ module.exports = function useImage(url) {
     function() {
       if (!url) return;
       const img = document.createElement('img');
+
+      // TODO: remove listeners on unmount
       img.addEventListener('load', function() {
         setState({ image: img, status: 'loaded' });
       });
