@@ -14,14 +14,22 @@ module.exports = function useImage(url) {
       if (!url) return;
       const img = document.createElement('img');
 
-      // TODO: remove listeners on unmount
-      img.addEventListener('load', function() {
+      function onload() {
         setState({ image: img, status: 'loaded' });
-      });
-      img.addEventListener('error', function() {
+      }
+
+      function onerror() {
         setState({ image: undefined, status: 'failed' });
-      });
+      }
+
+      img.addEventListener('load', onload);
+      img.addEventListener('error', onerror);
       img.src = url;
+
+      return function cleanup() {
+        img.removeEventListener('load', onload);
+        img.removeEventListener('error', onerror);
+      };
     },
     [url]
   );
