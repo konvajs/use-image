@@ -2,7 +2,7 @@ var React = require('react');
 
 var defaultState = { image: undefined, status: 'loading' };
 
-module.exports = function useImage(url) {
+module.exports = function useImage(url, crossOrigin) {
   var res = React.useState(defaultState);
   var image = res[0].image;
   var status = res[0].status;
@@ -24,6 +24,7 @@ module.exports = function useImage(url) {
 
       img.addEventListener('load', onload);
       img.addEventListener('error', onerror);
+      crossOrigin && (img.crossOrigin = crossOrigin);
       img.src = url;
 
       return function cleanup() {
