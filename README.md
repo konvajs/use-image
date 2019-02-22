@@ -16,12 +16,21 @@ import React from 'react';
 import { Image } from 'react-konva';
 import useImage from 'use-image';
 
-export default function App() {
-  const url = 'https://konvajs.github.io/assets/yoda.jpg';
-  let [image, status] = useImage(url);
+const url = 'https://konvajs.github.io/assets/yoda.jpg';
 
-  // image is DOM image element or undefined
-  // image will be undefined while its loading or loading is failed
+function SimpleApp() {  
+  const [image] = useImage(url);
+
+  // "image" will DOM image element or undefined
+
+  return (
+    <Image image={image} />
+  );
+}
+
+function ComplexApp() {
+  // set crossOrigin of image as second argument
+  const [image, status] = useImage(url, 'Anonymous');
 
   // status can be "loading", "loaded" or "failed"
 
@@ -29,8 +38,9 @@ export default function App() {
     <Image image={image} />
   );
 }
-
 ```
+
+
 
 ## License
 

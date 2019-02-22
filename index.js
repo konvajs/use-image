@@ -32,7 +32,7 @@ module.exports = function useImage(url, crossOrigin) {
         img.removeEventListener('error', onerror);
       };
     },
-    [url]
+    [url, crossOrigin]
   );
 
   // return array because it it better to use in case of several useImage hooks
