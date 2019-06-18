@@ -30,6 +30,7 @@ module.exports = function useImage(url, crossOrigin) {
       return function cleanup() {
         img.removeEventListener('load', onload);
         img.removeEventListener('error', onerror);
+        setState(defaultState);
       };
     },
     [url, crossOrigin]
