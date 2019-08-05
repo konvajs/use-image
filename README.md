@@ -1,6 +1,6 @@
 # useImage React Hook
 
-Custom React Hook for loading images. It load passed `url` and creates DOM image with such `src`.
+Custom React Hook for loading images. It loads passed `url` and creates DOM image with such `src`.
 Useful for canvas application like `react-konva`.
 
 [Open image demo](https://konvajs.org/docs/react/Images.html)
