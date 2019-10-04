@@ -4,7 +4,8 @@
   "description": "Custom React Hook for loading images.",
   "main": "index.js",
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "scripts": {},
   "repository": {
