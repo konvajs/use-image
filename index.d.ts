@@ -1,5 +1,5 @@
 declare function useImage(
-  url: string,
+  url?: string | null,
   crossOrigin?: string
 ): [undefined | HTMLImageElement, 'loaded' | 'loading' | 'failed'];
 
