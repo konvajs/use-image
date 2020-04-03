@@ -14,7 +14,7 @@ module.exports = function useImage(url, crossOrigin) {
       if (!url) return;
       const img = document.createElement('img');
 
-      function onload() {
+      function onload(img) {
         setState({ image: img, status: 'loaded' });
       }
 
@@ -22,7 +22,7 @@ module.exports = function useImage(url, crossOrigin) {
         setState({ image: undefined, status: 'failed' });
       }
 
-      img.addEventListener('load', onload);
+      img.addEventListener('load', onload.bind(this, img));
       img.addEventListener('error', onerror);
       crossOrigin && (img.crossOrigin = crossOrigin);
       img.src = url;
