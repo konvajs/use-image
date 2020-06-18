@@ -10,9 +10,9 @@ module.exports = function useImage(url, crossOrigin) {
   var setState = res[1];
 
   React.useEffect(
-    function() {
+    function () {
       if (!url) return;
-      const img = document.createElement('img');
+      var img = document.createElement('img');
 
       function onload() {
         setState({ image: img, status: 'loaded' });
