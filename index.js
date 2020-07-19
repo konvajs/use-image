@@ -2,12 +2,16 @@ var React = require('react');
 
 var defaultState = { image: undefined, status: 'loading' };
 
-module.exports = function useImage(url, crossOrigin) {
+module.exports = function useImage(_url, crossOrigin) {
   var res = React.useState(defaultState);
   var image = res[0].image;
   var status = res[0].status;
-
+  
   var setState = res[1];
+
+  var resUrl = React.useState(_url);
+  var url = resUrl[0];
+  var setUrl = resUrl[1];
 
   React.useEffect(
     function () {
@@ -39,5 +43,5 @@ module.exports = function useImage(url, crossOrigin) {
   // return array because it it better to use in case of several useImage hooks
   // const [background, backgroundStatus] = useImage(url1);
   // const [patter] = useImage(url2);
-  return [image, status];
+  return [image, status, setUrl];
 };
