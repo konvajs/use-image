@@ -41,6 +41,19 @@ function ComplexApp() {
     <Image image={image} />
   );
 }
+
+function AnotherApp() {
+  //get setUrl as a third parameter to use dynamically
+  const [image, status, setUrl] = useImage(url);
+
+  React.useEffect(function(){
+    setUrl(anotherUrl);
+  }, [anotherUrl, setUrl])
+
+  return (
+    <Image image={image} />
+  );
+}
 ```
 
 
