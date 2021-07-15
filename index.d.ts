@@ -1,6 +1,6 @@
 declare function useImage(
   url: string,
-  crossOrigin?: string
+  crossOrigin?: 'anonymous' | 'use-credentials'
 ): [undefined | HTMLImageElement, 'loaded' | 'loading' | 'failed'];
 
 export default useImage;
