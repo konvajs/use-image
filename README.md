@@ -33,7 +33,7 @@ function SimpleApp() {
 
 function ComplexApp() {
   // set crossOrigin of image as second argument
-  const [image, status] = useImage(url, 'Anonymous');
+  const [image, status] = useImage(url, 'anonymous');
 
   // status can be "loading", "loaded" or "failed"
 
