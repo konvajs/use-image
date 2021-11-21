@@ -1,35 +1,59 @@
-var React = require('react');
+const React = require("react");
+const defaultState = { image: undefined, status: "loading" };
 
-var defaultState = { image: undefined, status: 'loading' };
+module.exports = function useImage(
+  url,
+  crossOrigin,
+  headers = {},
+  cache = "*default"
+) {
+  const res = React.useState(defaultState);
+  const image = res[0].image;
+  const status = res[0].status;
 
-module.exports = function useImage(url, crossOrigin) {
-  var res = React.useState(defaultState);
-  var image = res[0].image;
-  var status = res[0].status;
-
-  var setState = res[1];
+  const setState = res[1];
 
   React.useEffect(
     function () {
       if (!url) return;
-      var img = document.createElement('img');
+      const img = document.createElement("img");
 
       function onload() {
-        setState({ image: img, status: 'loaded' });
+        setState({ image: img, status: "loaded" });
       }
 
       function onerror() {
-        setState({ image: undefined, status: 'failed' });
+        setState({ image: undefined, status: "failed" });
       }
 
-      img.addEventListener('load', onload);
-      img.addEventListener('error', onerror);
-      crossOrigin && (img.crossOrigin = crossOrigin);
-      img.src = url;
+      img.addEventListener("error", onerror);
+
+      let mode = "no-cors";
+      if (crossOrigin) {
+        mode = "*cors";
+      }
+
+      fetch(url, {
+        method: "GET",
+        mode,
+        cache,
+        headers,
+      })
+        .then(function (response) {
+          return response.blob();
+        })
+        .then(function (myBlob) {
+          const objectURL = URL.createObjectURL(myBlob);
+          img.src = objectURL;
+          img.addEventListener("load", onload);
+        })
+        .catch((err) => {
+          console.warn(err);
+        });
 
       return function cleanup() {
-        img.removeEventListener('load', onload);
-        img.removeEventListener('error', onerror);
+        img.removeEventListener("load", onload);
+        img.removeEventListener("error", onerror);
         setState(defaultState);
       };
     },
