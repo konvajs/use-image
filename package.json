@@ -1,6 +1,6 @@
 {
   "name": "use-image",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Custom React Hook for loading images.",
   "main": "index.js",
   "files": [
