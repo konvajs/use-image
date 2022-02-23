@@ -1,25 +1,41 @@
 var React = require('react');
 
-var defaultState = { image: undefined, status: 'loading' };
-
 module.exports = function useImage(url, crossOrigin) {
-  var res = React.useState(defaultState);
-  var image = res[0].image;
-  var status = res[0].status;
+  // lets use refs for image and status
+  // so we can update them during render
+  // to have instant update in status/image when new data comes in
+  const statusRef = React.useRef('loading');
+  const imageRef = React.useRef();
 
-  var setState = res[1];
+  // we are not going to use token
+  // but we need to just to trigger state update
+  const [_, setStateToken] = React.useState(0);
 
-  React.useEffect(
+  // keep track of old props to trigger changes
+  const oldUrl = React.useRef();
+  const oldCrossOrigin = React.useRef();
+  if (oldUrl.current !== url || oldCrossOrigin.current !== crossOrigin) {
+    statusRef.current === 'loading';
+    imageRef.current = undefined;
+    oldUrl.current = url;
+    oldCrossOrigin.current = crossOrigin;
+  }
+
+  React.useLayoutEffect(
     function () {
       if (!url) return;
       var img = document.createElement('img');
 
       function onload() {
-        setState({ image: img, status: 'loaded' });
+        statusRef.current = 'loaded';
+        imageRef.current = img;
+        setStateToken(Math.random());
       }
 
       function onerror() {
-        setState({ image: undefined, status: 'failed' });
+        statusRef.current = 'failed';
+        imageRef.current = undefined;
+        setStateToken(Math.random());
       }
 
       img.addEventListener('load', onload);
@@ -30,7 +46,6 @@ module.exports = function useImage(url, crossOrigin) {
       return function cleanup() {
         img.removeEventListener('load', onload);
         img.removeEventListener('error', onerror);
-        setState(defaultState);
       };
     },
     [url, crossOrigin]
@@ -39,5 +54,5 @@ module.exports = function useImage(url, crossOrigin) {
   // return array because it it better to use in case of several useImage hooks
   // const [background, backgroundStatus] = useImage(url1);
   // const [patter] = useImage(url2);
-  return [image, status];
+  return [imageRef.current, statusRef.current];
 };
