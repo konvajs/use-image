@@ -15,7 +15,7 @@ module.exports = function useImage(url, crossOrigin) {
   const oldUrl = React.useRef();
   const oldCrossOrigin = React.useRef();
   if (oldUrl.current !== url || oldCrossOrigin.current !== crossOrigin) {
-    statusRef.current === 'loading';
+    statusRef.current = 'loading';
     imageRef.current = undefined;
     oldUrl.current = url;
     oldCrossOrigin.current = crossOrigin;
