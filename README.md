@@ -32,8 +32,8 @@ function SimpleApp() {
 }
 
 function ComplexApp() {
-  // set crossOrigin of image as second argument
-  const [image, status] = useImage(url, 'anonymous');
+  // set crossOrigin of image as second argument, set referrerpolicy as third argument
+  const [image, status] = useImage(url, 'anonymous', 'origin');
 
   // status can be "loading", "loaded" or "failed"
 

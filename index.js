@@ -1,6 +1,6 @@
 var React = require('react');
 
-module.exports = function useImage(url, crossOrigin) {
+module.exports = function useImage(url, crossOrigin, referrerpolicy) {
   // lets use refs for image and status
   // so we can update them during render
   // to have instant update in status/image when new data comes in
@@ -14,11 +14,13 @@ module.exports = function useImage(url, crossOrigin) {
   // keep track of old props to trigger changes
   const oldUrl = React.useRef();
   const oldCrossOrigin = React.useRef();
-  if (oldUrl.current !== url || oldCrossOrigin.current !== crossOrigin) {
+  const oldReferrerPolicy = React.useRef();
+  if (oldUrl.current !== url || oldCrossOrigin.current !== crossOrigin || oldReferrerPolicy.current !== referrerpolicy) {
     statusRef.current = 'loading';
     imageRef.current = undefined;
     oldUrl.current = url;
     oldCrossOrigin.current = crossOrigin;
+    oldReferrerPolicy.current = referrerpolicy;
   }
 
   React.useLayoutEffect(
@@ -41,6 +43,7 @@ module.exports = function useImage(url, crossOrigin) {
       img.addEventListener('load', onload);
       img.addEventListener('error', onerror);
       crossOrigin && (img.crossOrigin = crossOrigin);
+      referrerpolicy && (img.referrerpolicy = referrerpolicy);
       img.src = url;
 
       return function cleanup() {
@@ -48,7 +51,7 @@ module.exports = function useImage(url, crossOrigin) {
         img.removeEventListener('error', onerror);
       };
     },
-    [url, crossOrigin]
+    [url, crossOrigin, referrerpolicy]
   );
 
   // return array because it it better to use in case of several useImage hooks
