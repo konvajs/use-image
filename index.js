@@ -43,7 +43,7 @@ module.exports = function useImage(url, crossOrigin, referrerpolicy) {
       img.addEventListener('load', onload);
       img.addEventListener('error', onerror);
       crossOrigin && (img.crossOrigin = crossOrigin);
-      referrerpolicy && (img.referrerpolicy = referrerpolicy);
+      referrerpolicy && (img.referrerPolicy = referrerpolicy);
       img.src = url;
 
       return function cleanup() {
@@ -54,7 +54,7 @@ module.exports = function useImage(url, crossOrigin, referrerpolicy) {
     [url, crossOrigin, referrerpolicy]
   );
 
-  // return array because it it better to use in case of several useImage hooks
+  // return array because it is better to use in case of several useImage hooks
   // const [background, backgroundStatus] = useImage(url1);
   // const [patter] = useImage(url2);
   return [imageRef.current, statusRef.current];

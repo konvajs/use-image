@@ -24,7 +24,7 @@ const url = 'https://konvajs.github.io/assets/yoda.jpg';
 function SimpleApp() {  
   const [image] = useImage(url);
 
-  // "image" will DOM image element or undefined
+  // "image" will be DOM image element or undefined
 
   return (
     <Image image={image} />
