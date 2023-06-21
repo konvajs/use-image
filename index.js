@@ -43,7 +43,7 @@ module.exports = function useImage(url, crossOrigin, referrerpolicy) {
       img.addEventListener('load', onload);
       img.addEventListener('error', onerror);
       crossOrigin && (img.crossOrigin = crossOrigin);
-      referrerpolicy && (img.referrerpolicy = referrerpolicy);
+      referrerpolicy && (img.referrerPolicy = referrerpolicy);
       img.src = url;
 
       return function cleanup() {
