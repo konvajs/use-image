@@ -15,7 +15,11 @@ module.exports = function useImage(url, crossOrigin, referrerpolicy) {
   const oldUrl = React.useRef();
   const oldCrossOrigin = React.useRef();
   const oldReferrerPolicy = React.useRef();
-  if (oldUrl.current !== url || oldCrossOrigin.current !== crossOrigin || oldReferrerPolicy.current !== referrerpolicy) {
+  if (
+    oldUrl.current !== url ||
+    oldCrossOrigin.current !== crossOrigin ||
+    oldReferrerPolicy.current !== referrerpolicy
+  ) {
     statusRef.current = 'loading';
     imageRef.current = undefined;
     oldUrl.current = url;
@@ -29,9 +33,23 @@ module.exports = function useImage(url, crossOrigin, referrerpolicy) {
       var img = document.createElement('img');
 
       function onload() {
-        statusRef.current = 'loaded';
-        imageRef.current = img;
-        setStateToken(Math.random());
+        img
+          // in Polotno app I found a case when loaded image was not rendered correctly at the first attempt
+          // I found that decoding it manually fixes the issue
+          // also it may be good idea decode it that way, so the work is done in the background
+          // and we don't block the main thread
+          // in context of canvas rendering, large images is a common case
+          .decode()
+          .then(() => {
+            statusRef.current = 'loaded';
+            imageRef.current = img;
+            setStateToken(Math.random());
+          })
+          .catch(() => {
+            statusRef.current = 'failed';
+            imageRef.current = undefined;
+            setStateToken(Math.random());
+          });
       }
 
       function onerror() {
