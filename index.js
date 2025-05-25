@@ -40,9 +40,11 @@ module.exports = function useImage(url, crossOrigin, referrerpolicy) {
           // and we don't block the main thread
           // in context of canvas rendering, large images is a common case
           .decode()
-          // here we will ignore catch (error)
-          // because decode may fail but still will render just fine with drawImage on canvas.
+          // catch and ignore decode errors because decode may fail but still will render just fine with drawImage on canvas.
           // I got that case with very large image and chrome
+          .catch(() => {
+            // Intentionally ignore decode errors - image can still render fine on canvas
+          })
           .finally(() => {
             statusRef.current = 'loaded';
             imageRef.current = img;
