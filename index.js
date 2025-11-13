@@ -48,14 +48,14 @@ module.exports = function useImage(url, crossOrigin, referrerpolicy) {
           .finally(() => {
             statusRef.current = 'loaded';
             imageRef.current = img;
-            setStateToken(Math.random());
+            setStateToken(prevStateToken => prevStateToken + 1);
           });
       }
 
       function onerror() {
         statusRef.current = 'failed';
         imageRef.current = undefined;
-        setStateToken(Math.random());
+        setStateToken(prevStateToken => prevStateToken + 1);
       }
 
       img.addEventListener('load', onload);
